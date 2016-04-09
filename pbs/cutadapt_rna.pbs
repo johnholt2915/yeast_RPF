@@ -1,0 +1,19 @@
+#!/bin/bash
+#PBS -l mem=8GB
+#PBS -l walltime=1:00:00
+#PBS -l nodes=1:ppn=4
+#PBS -M jah833@nyu.edu
+#PBS -N cutadapt_1-4
+#PBS -t 1-4
+
+cd /scratch/jah833/WorkFlow/RNA_SEQ
+
+module purge
+module load cutadapt
+
+cutadapt -a AGATCGGAAGAGCACACGTCT -m 30 -o ./CUTADAPT/gms_$PBS_ARRAYID.fastq ./C7KCWACXX_l04n01_151022_gms$PBS_ARRAYID*
+
+echo 'done'
+
+exit
+

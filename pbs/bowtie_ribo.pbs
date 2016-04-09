@@ -1,0 +1,22 @@
+#!/bin/bash
+#PBS -l mem=8GB
+#PBS -l walltime=3:00:00
+#PBS -l nodes=1:ppn=4
+#PBS -M jah833@nyu.edu
+#PBS -N bowtie2_RIBO_ontorRNA
+#PBS -t 5-8
+
+cd $SCRATCH/WorkFlow/RIBO_SEQ/fastQC
+
+mkdir ./RIBO_Unaligned_$PBS_ARRAYID
+mkdir ./RIBO_Aligned_$PBS_ARRAYID
+
+module purge
+module load bowtie2
+
+bowtie2 --un ./RIBO_Unaligned_$PBS_ARRAYID/unaligned_$PBS_ARRAYID.fastq -x rRNA -U ../CUTADAPT/gms_$PBS_ARRAYID.fastq > ./RIBO_Aligned_$PBS_ARRAYID/rrnaAlignments_$PBS_ARRAYID.aln 2> ./RIBO_Unaligned_$PBS_ARRAYID/stats_$PBS_ARRAYID.txt
+
+echo 'done'
+
+exit
+

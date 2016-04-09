@@ -1,0 +1,20 @@
+#!/bin/bash
+#PBS -l mem=30GB
+#PBS -l nodes=1:ppn=16
+#PBS -l walltime=4:00:00
+#PBS -N tophat_rna
+#PBS -M jah833@nyu.edu
+#PBS -t 1-4
+
+cd $SCRATCH/WorkFlow
+
+module purge
+module load tophat
+
+tophat --num-threads 16 --GTF ./GTF/Saccharomyces_cerevisiae.R64-1-1.84.fixed.gtf --no-coverage-search --output-dir ./tophat_out3/tophat_out$PBS_ARRAYID ./Saccharomyces/Saccharomyces_cerevisiae/UCSC/sacCer3/Sequence/Bowtie2Index/genome ./RNA_SEQ/fastQC/RNA_Unaligned_$PBS_ARRAYID/unaligned_*.fastq
+
+echo 'done'
+
+exit
+
+

@@ -1,0 +1,22 @@
+#!/bin/bash
+#PBS -l mem=8GB
+#PBS -l walltime=3:00:00
+#PBS -l nodes=1:ppn=4
+#PBS -M jah833@nyu.edu
+#PBS -N bowtie2_RNA_ontorRNA
+#PBS -t 1-4
+
+cd $SCRATCH/WorkFlow/RNA_SEQ/fastQC
+
+mkdir ./RNA_Unaligned_$PBS_ARRAYID
+mkdir ./RNA_Aligned_$PBS_ARRAYID
+
+module purge
+module load bowtie2
+
+bowtie2 --un ./RNA_Unaligned_$PBS_ARRAYID/unaligned_$PBS_ARRAYID.fastq -x rRNA -U ../CUTADAPT/gms_$PBS_ARRAYID.fastq > ./RNA_Aligned_$PBS_ARRAYID/rrnaAlignments_$PBS_ARRAYID.aln 2> ./RNA_Unaligned_$PBS_ARRAYID/stats_$PBS_ARRAYID.txt
+
+echo 'done'
+
+exit
+
